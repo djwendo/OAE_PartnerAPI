@@ -30,7 +30,7 @@ The Partner API Swagger playground is [here](https://git.corp.adobe.com/pages/ab
 
 
 ## Contributing
-Contributions are welcome! Read the [Contributing Guide](/blob/master/CONTRIBUTING.md) for more information.
+Contributions are welcome! Read the [Contributing Guide](CONTRIBUTING.md) for more information.
 
 ## Licensing
-This project is licensed under the MIT License. See [LICENSE](/blob/master/LICENSE) for more information.
+This project is licensed under the MIT License. See [LICENSE](LICENSE) for more information.
