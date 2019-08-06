@@ -1,13 +1,13 @@
 # Experience Cloud - Adobe Exchange Partner API
 Partner API specification that needs to be implemented by Experience Cloud Extension developers, who are consuming product APIs via Adobe I/O
 
-## What is Adobe Exchange?
+## Introduction
 
+### What is Adobe Exchange?
 [Adobe Exchange](https://exchange.adobe.com) is a marketplace for all Adobe product extensions / plugins / apps / integrations.
 
-## How do I list my extension on the Exchange?
-
-You can join one of the partner programs found [here](https://www.adobe.com/partners.html) and start building apps for Creative / Experience / Document Cloud prodcuts.
+### How do I list my extension on the Exchange?
+You can join one of the partner programs found [here](https://www.adobe.com/partners.html) and start building apps for Creative / Experience / Document Cloud prodcuts. This documentation is specifically for partners enrolled in [Adobe Exchange Partner Program for Experience Cloud](https://partners.adobe.com/exchangeprogram/experiencecloud.html).
 
 ## What's the Partner API?
 
@@ -24,4 +24,8 @@ Adobe Exchange will facilitate creation of this integration, public-private key 
 The detailed specification of that API is provided in this repo as a swagger.yaml . This is the Partner API.
 
 
+## Contributing
+Contributions are welcome! Read the [Contributing Guide](../CONTRIBUTING.md) for more information.
 
+## Licensing
+This project is licensed under the MIT License. See [LICENSE](../LICENSE) for more information.
