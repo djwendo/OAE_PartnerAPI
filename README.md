@@ -24,8 +24,9 @@ Adobe Exchange will facilitate creation of this integration, public-private key 
 The detailed specification of that API is provided in this repo as a swagger.yaml . This is the Partner API.
 
 
-The Partner API Endpoints are explained [here](https://adobeexchangeec.zendesk.com/hc/en-us/articles/360028551691-Adobe-Exchange-App-Manager-API-URLs)
-The Partner API Swagger playground is [here](https://git.corp.adobe.com/pages/abhishg/OAE_PartnerAPI/)
+The Partner API Endpoints are explained [here](https://adobeexchangeec.zendesk.com/hc/en-us/articles/360028551691-Adobe-Exchange-App-Manager-API-URLs).
+
+The Partner API Swagger playground is [here](https://git.corp.adobe.com/pages/abhishg/OAE_PartnerAPI/).
 
 
 ## Contributing
