@@ -26,7 +26,7 @@ The detailed specification of that API is provided in this repo as a swagger.yam
 
 The Partner API Endpoints are explained [here](https://adobeexchangeec.zendesk.com/hc/en-us/articles/360028551691-Adobe-Exchange-App-Manager-API-URLs).
 
-The Partner API Swagger playground is [here](https://git.corp.adobe.com/pages/abhishg/OAE_PartnerAPI/).
+The Partner API Swagger playground is [here](https://adobedocs.github.io/OAE_PartnerAPI/).
 
 
 ## Contributing
