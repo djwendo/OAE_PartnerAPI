@@ -12,7 +12,7 @@ info:
 host: "io.hitthecodejack.com"
 basePath: "/api"
 schemes:
-- "https"
+  - "https"
 paths:
   /v1/partnerintegration:
     post:
@@ -20,16 +20,20 @@ paths:
       description: "create integration"
       operationId: "createIntegration"
       consumes:
-      - "application/json"
+        - "application/json"
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - in: "body"
-        name: "body"
-        description: "Integration Metadata"
-        required: true
-        schema:
-          $ref: "#/definitions/partnerIntegrationData"
+        - in: "header"
+          name: "X-XChange-Auth"
+          type: "string"
+          required: true
+        - in: "body"
+          name: "body"
+          description: "Integration Metadata"
+          required: true
+          schema:
+            $ref: "#/definitions/partnerIntegrationData"
       responses:
         200:
           description: "successful operation"
@@ -43,21 +47,25 @@ paths:
       description: "update integration"
       operationId: "updateIntegration"
       consumes:
-      - "application/json"
+        - "application/json"
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - in: "path"
-        name: "integrationId"
-        description: "id of the integration to be updated"
-        required: true
-        type: "string"
-      - in: "body"
-        name: "body"
-        description: "Integration Metadata"
-        required: true
-        schema:
-          $ref: "#/definitions/partnerIntegrationData"
+        - in: "header"
+          name: "X-XChange-Auth"
+          type: "string"
+          required: true
+        - in: "path"
+          name: "integrationId"
+          description: "id of the integration to be updated"
+          required: true
+          type: "string"
+        - in: "body"
+          name: "body"
+          description: "Integration Metadata"
+          required: true
+          schema:
+            $ref: "#/definitions/partnerIntegrationData"
       responses:
         200:
           description: "successful operation"
@@ -65,24 +73,28 @@ paths:
             $ref: "#/definitions/ApiResponse"
         405:
           description: "Invalid input"
-  /v1/partnerintegration/{integrationId}/{clientSecret}:          
+  /v1/partnerintegration/{integrationId}/{clientSecret}:
     delete:
       summary: "delete an existing integration"
       description: ""
       operationId: "deleteIntegration"
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - in: "path"
-        name: "integrationId"
-        description: "id of the integration to be deleted"
-        required: true
-        type: "string"
-      - in: "path"
-        name: "clientSecret"
-        description: "client secret of the integration to be deleted. the Integration must only be deleted if integrationId and client secret match."
-        required: true
-        type: "string"
+        - in: "header"
+          name: "X-XChange-Auth"
+          type: "string"
+          required: true
+        - in: "path"
+          name: "integrationId"
+          description: "id of the integration to be deleted"
+          required: true
+          type: "string"
+        - in: "path"
+          name: "clientSecret"
+          description: "client secret of the integration to be deleted. the Integration must only be deleted if integrationId and client secret match."
+          required: true
+          type: "string"
       responses:
         200:
           description: "successful operation"
@@ -98,13 +110,17 @@ paths:
       description: "this is a method where partners can execute any code to internal and Adobe I/O apis that determine if the integration is working properly. The status of this test is visible to users in Adobe Exchange. The integration must only be updated if integrationId and client secret match an existing integration."
       operationId: "testIntegration"
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - in: "path"
-        name: "integrationId"
-        description: "id of the integration to be tested"
-        required: true
-        type: "string"
+        - in: "header"
+          name: "X-XChange-Auth"
+          type: "string"
+          required: true
+        - in: "path"
+          name: "integrationId"
+          description: "id of the integration to be tested"
+          required: true
+          type: "string"
       responses:
         200:
           description: "successful operation"
@@ -118,7 +134,12 @@ paths:
       description: "this is a method where you (the partner) can execute any code to check if all the required systems to run this api are availalbe."
       operationId: "alive"
       produces:
-      - "application/json"
+        - "application/json"
+      parameters:
+        - in: "header"
+          name: "X-XChange-Auth"
+          type: "string"
+          required: true
       responses:
         200:
           description: "successful operation"
@@ -156,7 +177,7 @@ definitions:
       customerContact:
         type: "string"
         description: "Customer Contact Name"
-      ioApis: 
+      ioApis:
         type: array
         description: "list of io apis (jwt token metascopes) to be added to this integration"
         items:
