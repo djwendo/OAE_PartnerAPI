@@ -1,13 +1,20 @@
 swagger: "2.0"
 info:
-  description: "This is the interface Adobe partners need to implement for automated Adobe IO integrations."
+  description: >-
+    This is the interface Adobe partners need to implement for automated Adobe IO integrations.
+    
+    
+    [App Exchange Application Content Guide](https://partners.adobe.com/exchangeprogram/experiencecloud/build/ec-exchange.html#) - Must be logged into [Adobe Exchange Partner site](https://partners.adobe.com/exchangeprogram/experiencecloud) to view.
+    
+    
+    [Creating and Updating your App Listing using App Manager](https://adobeexchangeec.zendesk.com/hc/en-us/articles/360024197931-Adobe-Exchange-Creating-and-Updating-your-App-Listing-using-App-Manager)
+    
+    
+    [Adobe I/O authentication guide](https://www.adobe.io/authentication/auth-methods.html#!AdobeDocs/adobeio-auth/master/AuthenticationOverview/AuthenticationGuide.md)
   version: "0.1.0"
-  title: "Adobe IO Partner Api"
-  termsOfService: "todo"
-  contact:
-    email: "todo"
+  title: "Adobe I/O Partner API"
   license:
-    name: "Apache 2.0"
+    name: "Apache 2.0 License"
     url: "http://www.apache.org/licenses/LICENSE-2.0.html"
 host: "io.hitthecodejack.com"
 basePath: "/api"
@@ -16,223 +23,272 @@ schemes:
 paths:
   /v1/generateCert:
     post:
-      summary: "generate a new certificate for the integration"
-      description: "generate cert"
+      summary: "Generate a new certificate for the integration."
+      description: "Generate a certificate given an Adobe Organization ID and application ID."
       operationId: "generateCert"
       consumes:
         - "application/json"
       produces:
         - "application/json"
       parameters:
-        - in: "header"
-          name: "X-XChange-Auth"
-          type: "string"
-          required: true
-        - in: "body"
-          name: "body"
-          description: "Integration Metadata"
+        - $ref: "#/parameters/x-xchange-auth"
+        - in: body
+          name: body
+          description: "Integration Metadata."
           required: true
           schema:
             $ref: "#/definitions/certGenerationInfo"
       responses:
         200:
-          description: "successful operation"
+          description: "Successful operation."
           schema:
             $ref: "#/definitions/generateCertResponse"
         405:
           description: "Invalid input"
   /v1/partnerintegration:
     post:
-      summary: "create a new partner integration"
-      description: "create integration"
+      summary: "Create a new partner integration."
+      description: "Create a new partner integration using the metadata provided in the request body."
       operationId: "createIntegration"
       consumes:
         - "application/json"
       produces:
         - "application/json"
       parameters:
-        - in: "header"
-          name: "X-XChange-Auth"
-          type: "string"
-          required: true
+        - $ref: "#/parameters/x-xchange-auth"
         - in: "body"
           name: "body"
-          description: "Integration Metadata"
+          description: "Integration Metadata."
           required: true
           schema:
             $ref: "#/definitions/partnerIntegrationData"
       responses:
         200:
-          description: "successful operation"
+          description: "Successful operation"
           schema:
-            $ref: "#/definitions/ApiResponse"
+            type: object
+            properties:
+              error: 
+                type: boolean
+                example: false
+              message:
+                type: string
+                example: "Record has been saved."
         405:
           description: "Invalid input"
   /v1/partnerintegration/{integrationId}:
     put:
-      summary: "update an existing partner integration"
-      description: "update integration"
+      summary: "Update an existing partner integration"
+      description: >- 
+        
+        This is the method for modifying the permissions that have been granted to you. Customers will be able to add or remove services or permissions that were previously provided at the installation time and this method will be invoked to send you the new JWT token with the new permissions. To check on what permissions the customer has granted you, you can use the [Adobe I/O metascopes API](https://www.adobe.io/authentication/auth-methods.html#!AdobeDocs/adobeio-auth/master/JWT/Scopes.md). 
+      
+        
+        The integration must only be updated if 'integrationId' and 'clientsecret' match an existing integration.
       operationId: "updateIntegration"
       consumes:
         - "application/json"
       produces:
         - "application/json"
       parameters:
-        - in: "header"
-          name: "X-XChange-Auth"
-          type: "string"
-          required: true
+        - $ref: "#/parameters/x-xchange-auth"
         - in: "path"
           name: "integrationId"
-          description: "id of the integration to be updated"
+          description: "ID of the integration to be updated."
           required: true
           type: "string"
+          x-example: "89097"
         - in: "body"
           name: "body"
-          description: "Integration Metadata"
+          description: "Integration Metadata."
           required: true
           schema:
             $ref: "#/definitions/partnerIntegrationData"
       responses:
         200:
-          description: "successful operation"
+          description: "Successful operation"
           schema:
-            $ref: "#/definitions/ApiResponse"
+            type: object
+            properties:
+              error:
+                type: boolean
+                example: false
+              message:
+                type: string
+                example: Integration updated successfully.
         405:
           description: "Invalid input"
   /v1/partnerintegration/{integrationId}/{clientSecret}:
     delete:
-      summary: "delete an existing integration"
-      description: ""
+      summary: "Delete an existing integration."
+      description: "This is the method for terminating the existing connection. This method will be invoked when a customer decides to uninstall your integration."
       operationId: "deleteIntegration"
       produces:
         - "application/json"
       parameters:
-        - in: "header"
-          name: "X-XChange-Auth"
-          type: "string"
-          required: true
+        - $ref: "#/parameters/x-xchange-auth"
         - in: "path"
           name: "integrationId"
-          description: "id of the integration to be deleted"
+          description: "ID of the integration to be deleted."
           required: true
           type: "string"
+          x-example: "89097"
         - in: "path"
           name: "clientSecret"
-          description: "client secret of the integration to be deleted. the Integration must only be deleted if integrationId and client secret match."
+          description: "Client secret of the integration to be deleted. The integration must only be deleted if 'integrationId' and 'clientSecret' match."
           required: true
           type: "string"
+          x-example: "25a016a09f293ecede61502ce8a63440"
       responses:
         200:
-          description: "successful operation"
+          description: "Successful operation"
           schema:
-            $ref: "#/definitions/ApiResponse"
+            type: object
+            properties:
+              error: 
+                type: boolean
+                example: false
+              message:
+                type: string
+                example: Record has been deleted.
         404:
-          description: "integration not found"
+          description: "Integration not found"
         405:
           description: "Invalid input"
   /v1/testIntegration/{integrationId}:
     get:
-      summary: "test an existing integration"
-      description: "this is a method where partners can execute any code to internal and Adobe I/O apis that determine if the integration is working properly. The status of this test is visible to users in Adobe Exchange. The integration must only be updated if integrationId and client secret match an existing integration."
+      summary: "Test an existing integration."
+      description: >-
+      
+        This is a method where partners can execute any code to internal and Adobe I/O apis that determine if the integration is working properly. The status of this test is visible to users in Adobe Exchange. 
+        
+        
+        This method is similar to the Alive method, but instead of the test being initiated on your side on a regular basis, the connection test will be initiated by customers. This will be used by customers to test that your system is up and running when they suspect there might be a problem with the integration. 
+        
+        
+        The test connection method will be invoked from the “My Exchange” section when the customer logs in to Exchange to see the status of the apps."
       operationId: "testIntegration"
       produces:
         - "application/json"
       parameters:
-        - in: "header"
-          name: "X-XChange-Auth"
-          type: "string"
-          required: true
+        - $ref: "#/parameters/x-xchange-auth"
         - in: "path"
           name: "integrationId"
-          description: "id of the integration to be tested"
+          description: "ID of the integration to be tested."
           required: true
           type: "string"
       responses:
         200:
-          description: "successful operation"
+          description: "Successful operation"
           schema:
-            $ref: "#/definitions/ApiResponse"
+            type: object
+            properties:
+              error:
+                type: boolean
+                example: false
+              message:
+                type: string
+                example: Test successful.
         404:
-          description: "integration not found"
+          description: "Integration not found"
   /v1/alive:
     get:
-      summary: "test the general status of the server"
-      description: "this is a method where you (the partner) can execute any code to check if all the required systems to run this api are availalbe."
+      summary: "Test the general status of the server."
+      description: "This is a method where you (the partner) can execute any code to check if all the required systems to run this API are available. This method is used to test the status of your system. You can call Adobe Exchange’s Keep Alive API at a pre-defined interval. Once Exchange receives this call, Adobe Exchange will call your Alive endpoint to complete the handshake and get an update on the current connection."
       operationId: "alive"
       produces:
         - "application/json"
       parameters:
-        - in: "header"
-          name: "X-XChange-Auth"
-          type: "string"
-          required: true
+        - $ref: "#/parameters/x-xchange-auth"
       responses:
         200:
-          description: "successful operation"
+          description: "Successful operation"
           schema:
-            $ref: "#/definitions/ApiResponse"
+            type: object
+            properties:
+              error: 
+                type: boolean
+                example: false
+              message:
+                type: string
+                example: "Alive!"
+parameters:
+  x-xchange-auth:
+    in: header
+    name: "X-XChange-Auth"
+    type: "string"
+    required: true
+    description: "Currently, the value sent for X-XChange-Auth is fixed to ‘temp-value-for-x-xchange-auth’."
+    default: "temp-value-for-x-xchange-auth"
 definitions:
   certGenerationInfo:
     type: "object"
     properties:
       orgid:
         type: "string"
-        description: "Adobe Organization Id"
+        description: "Adobe Organization ID"
+        example: "12345C25B8F03B40A495E78@AdobeOrg"
       appnum:
         type: "string"
-        description: "id of your partner app"
+        description: "ID of your partner application."
+        example: "103749"
   partnerIntegrationData:
     type: "object"
     properties:
       integrationId:
         type: "string"
-        description: "Adobe I/O Integration Id"
+        description: "Integration ID."
+        example: "89097"
       clientsecret:
         type: "string"
-        description: "Adobe Integration I/O client secret for the integration"
+        description: "Client secret for the integration."
+        example: "d929f7f5-68c3-4596-98a7-f6716b9c1f1c"
       techaccountid:
         type: "string"
-        description: "Adobe Integration I/O technical account id for the integration"
+        description: "Technical account ID for the integration."
+        example: "DEB942575E9F821A0A495CB0@techacct.adobe.com"
       apikey:
         type: "string"
-        description: "Adobe Integration I/O api key for the integration"
+        description: "API key for the integration."
+        example: "2b7228e74cd64a9884f4a027340986b6"
       orgid:
         type: "string"
-        description: "Adobe Organization Id"
+        description: "Adobe Organization ID."
+        example: "12345C25B8F03B40A495E78@AdobeOrg"
       orgname:
         type: "string"
-        description: "Customer Organization Name"
+        description: "Customer Organization Name."
+        example: "Acme Corp"
       customerEmail:
         type: "string"
-        description: "Customer Contact Email"
+        description: "Customer Contact Email."
         format: "email"
+        example: "john.doe@acmecorp.com"
       customerContact:
         type: "string"
-        description: "Customer Contact Name"
+        description: "Customer Contact Name."
+        example: "John Doe"
       ioApis:
         type: array
-        description: "list of io apis (jwt token metascopes) to be added to this integration"
+        description: "List of I/O APIs (JWT metascopes) to be added to this integration."
         items:
           type: string
+          example: "https://ims-na1.adobelogin.com/s/ent_analytics_bulk_ingest_sdk"
       name:
         type: "string"
-        description: "Display name of the Integration"
+        description: "Display name of the Integration."
+        example: "My Exchange App"
       appnum:
         type: "string"
-        description: "id of your partner app"
-  ApiResponse:
-    type: "object"
-    properties:
-      error:
-        type: "boolean"
-      message:
-        type: "string"
+        description: "ID of your partner app."
+        example: "103749"
   generateCertResponse:
     type: "object"
     properties:
       cert:
         type: "string"
-externalDocs:
-  description: "Aobe I/O authentication guide:"
-  url: "https://www.adobe.io/authentication/auth-methods.html#!AdobeDocs/adobeio-auth/master/AuthenticationOverview/AuthenticationGuide.md"
+        description: "Encoded certificate, beginning with '-----BEGIN CERTIFICATE-----' and ending with '-----END CERTIFICATE-----'"
+        example: >-
+          -----BEGIN CERTIFICATE-----
+          MIIDTjCCAjagAwIBAgIIBZc19K2tdhQwDQYJKoZIhvcNAQEFBQAwZzELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAkNBMRYwFAYDVQQHEw1TYW4gRnJhbmNpc2NvMQ4wDAYDVQQKEwVBZG9iZTERMA8GA1UECxMIU2VjdXJpdHkxEDAOBgNVBAMTB0NvbnNvbGUwHhcNMjAwNDI3MjIyOTM3WhcNMjEwNDI3MjIyOTM3WjBnMQswCQYDVQQGEwJVUzELMAkGA1UECBMCQ0ExFjAUBgNVBAcTDVNhbiBGcmFuY2lzY28xDjAMBgNVBAoTBUFkb2JlMREwDwYDVQQLEwhTZWN1cml0eTEQMA4GA1UEAxMHQ29uc29sZTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAJEF7f1NyRqkGhlzLejWOFpwZyLD+/LwfxNFz/pJDHS3JUNIk8a9KMOu9vWPAmMfkD5oT4KrLezWu4sCD+3Obtu+/UMxHSgnbt3Lp2zf2LXhqqAMJK9HSIawjcAUjH4vVDbsxE7Sq6kc+P6VVw48HN2HLwO8vAvLbRjBZKD0+c8aRSFmKNMNit8n8+wFIR5A0vTpMI6Xv3Mh84GB7l51Dx0KS512yc7xv9F3efmAIP4dQtrkvIS0K/b8jekueQOk0qRZUq8CVHqLPe4+pcMV84PdYFq5f/8/iPd3YjtIKMK28oWRU9wEFGm+zOxSlLCPT0LvRRpQwS1OHNC25c6hnL0CAwEAATANBgkqhkiG9w0BAQUFAAOCAQEAdjZ1QhLJrq27O6cXZNEpOIGIsXhCNVAWIendLuIOoJbS0fu0kYTcyMYfwXEuYKgDuoVXAsEH5fze9iFMYCEh+04/a3LwmISU7PgPG20gQeuOk4ZCeNB5gI4qjKQ7hBwJRh4q9dTOLBz5BlCT3Cr6euAUT1zYKBKn9VbAAcbeBNGxoXK7kSsUD2yqj4OZTkN5JvQ3sLBBejRH2CxrWua3GqQMLsoT3o6KXluxzlCC6KUbZN8gw1vY35lz4ssT0H18kZHVEoJXSiFD0zTihQSBFrcsf9/C/TzNQYuPPSmeXuGP1QNPm5MohwxilwklVlM7/2ZrWD2qOV9QldW4JdrsQw==
+          -----END CERTIFICATE-----
