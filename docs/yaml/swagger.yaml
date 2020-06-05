@@ -166,7 +166,7 @@ paths:
         This method is similar to the Alive method, but instead of the test being initiated on your side on a regular basis, the connection test will be initiated by customers. This will be used by customers to test that your system is up and running when they suspect there might be a problem with the integration. 
         
         
-        The test connection method will be invoked from the “My Exchange” section when the customer logs in to Exchange to see the status of the apps."
+        The test connection method will be invoked from the “My Exchange” section when the customer logs into Exchange to see the status of the app.
       operationId: "testIntegration"
       produces:
         - "application/json"
